@@ -1,0 +1,15 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format    
+    "tasks": [
+        {
+            "label":"Make Fortran Project",
+            "type": "shell",
+            "command":"make -f makefile DEBUG=1",
+            "group": {
+                "kind":"build",
+                "isDefault": true
+            }
+        }
+    ]
+}

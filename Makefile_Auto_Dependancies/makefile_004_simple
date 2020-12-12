@@ -1,0 +1,28 @@
+# Followed these instructions https://www.youtube.com/watch?v=UEJKJbzGdlc&list=PLNmACol6lYY7Dzvg7jKgvMdDaDEDFnNqD&index=4
+FC=gfortran		# Fortran Compiler
+FFLAGS=-O2 -g -Wall -Wextra
+LINKER = $(FC) -o
+FCLINKS = -g 
+
+#FFLAGS=-Wall -Wextra -fopenmp		# OpenMP
+
+OBJS = AddNumbers.o SubtractNumbers.o FastLoop.o main.o 
+PROG = main.exe
+
+$(PROG) : $(OBJS)
+	$(LINKER) $(PROG) $(OBJS) -g
+
+AddNumbers.o: AddNumbers.F90
+	$(FC) -c AddNumbers.F90
+
+SubtractNumbers.o: SubtractNumbers.F90 AddNumbers.o
+	$(FC) -c SubtractNumbers.F90
+
+FastLoop.o: FastLoop.F90
+	$(FC) -c FastLoop.F90
+
+main.o: main.F90
+	$(FC) -c main.F90
+	
+clean:
+	rm -r *.mod *.o *.exe

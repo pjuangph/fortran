@@ -1,0 +1,39 @@
+# Followed instructions from here https://www.youtube.com/watch?v=ZSc2-49huLU&list=PLNmACol6lYY7Dzvg7jKgvMdDaDEDFnNqD&index=5
+
+FC=gfortran		# Fortran Compiler
+FFLAGS=-O2 -g -Wall -Wextra
+LINKER = $(FC) -o
+FCLINKS = -g 
+
+#FFLAGS=-Wall -Wextra -fopenmp		# OpenMP
+
+OBJS = AddNumbers.o SubtractNumbers.o FastLoop.o main.o 
+PROG = main.exe
+
+# Make all Targets
+all: $(PROG)
+
+$(PROG) : $(OBJS)
+	@echo "-----------------------------"
+	@echo "Creating the executable"
+	@echo "-----------------------------"
+	$(LINKER) $(PROG) $(OBJS) $(FCLINKS)
+
+# This part says, if you come across any .o files, take the corresponding F90 file and use this command to build. This looks through dependancy chain
+%.o : %.F90
+	@echo "-----------------------------"
+	@echo "Compiling the files into objects"
+	@echo "-----------------------------"
+	$(FC) $(FFLAGS) -c $<
+# $< evaluates to SubtractNumbers.F90 the first prerequisite
+# $@ evaluates to "SubtractNumbers.o" whichever the target caused the rule to run
+# $^ evaluates to "SubtractNumbers.F90 AddNumbers.o" all prerequisites
+
+clean:
+	rm -r *.mod *.o *.exe
+
+# Dependancy chains
+AddNumbers.o: AddNumbers.F90
+SubtractNumbers.o: SubtractNumbers.F90 AddNumbers.o
+FastLoop.o: FastLoop.F90
+main.o: main.F90

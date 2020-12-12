@@ -1,0 +1,56 @@
+# https://stackoverflow.com/questions/57866481/automatic-dependency-detection-not-working-in-gfortran
+
+FC=gfortran		# Fortran Compiler
+FFLAGS=-O2 -g -Wall -Wextra
+LINKER = $(FC) -o
+#FFLAGS=-Wall -Wextra -fopenmp		# OpenMP
+
+# Building the Object Files
+BUILD_DIR=build
+SOURCE_DIR=./
+SRCS := $(shell find $(SOURCE_DIR) -name '*.F90')
+OBJS := $(SOURCES:.F90=.o)
+DEPS := $(OBJECTS:.o=.d)
+
+$(info List of all source files $(NEWLINE)$(SOURCES))
+
+build_dir:
+	@ mkdir -p $(BUILD_DIR)
+# Create the object files 
+
+# Create the executable
+main: $(OBJECTS)
+	$(LINKER) $^ build/$@ 
+
+# $(OBJECTS): %.F90
+# 	$(F90) $(FFLAGS) -c $< -o $(BUILD_DIR)/$@
+
+-include $(DEPS)
+$(BUILD_DIR)/%.o: %.F90 
+	$(FC) $(FFLAGS) -cpp -MD -c -o $@ $<
+
+# This makes sure make clean is run even though there is no file called clean
+.PHONY: clean 
+clean: 
+	rm -rf *.o *.mod *~
+
+
+
+# Compile all objects to .o
+# $(OBJECTS):
+# 	$(foreach source, $(SOURCES), $(FC) -c $(source) -o $(BUILD_DIR)/$(source:.F90=.o); $(info $(FC) -o $(BUILD_DIR)/$(source:.F90=.o) $(source)))
+
+# build/%.o: dependancies/%.F90
+# 	$(FC) -c $<
+
+
+# a.out		Prerequisites 
+# 			Recipe
+# 	Note: $@ = name of target rule, $? = name of all prerequisites
+# a.out: 
+# 	rm -rf $(BUILD_DIR) 			
+# 	mkdir $(BUILD_DIR)
+# 	$(FC) -o a.out -c $(SOURCES) 
+
+
+# Create Rules to make all the .o files and their dependancies 
