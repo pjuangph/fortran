@@ -1,4 +1,4 @@
-# Paht's fortran learning README
+# Paht's Fortran learning README
 Documenting my Fortran learning with examples. 
 
 ## Makefile Autodependancy generation
