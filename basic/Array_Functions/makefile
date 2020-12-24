@@ -19,24 +19,28 @@ OBJECTS := $(SOURCES:.f95=.o)
 
 ## Auto Generation of Dependancies 
 MAKEDEPEND=~/anaconda3/envs/dev/bin/fortdepend
-depend:=$(shell $(MAKEDEPEND) -f $(SOURCES) -o $(DEP_FILE))
+check:
+ifeq (,$(DEP_FILE))
+	@echo "$(DEP_FILE) exists, skipping"
+else
+	@echo "Creating dependancy file"
+	$(shell $(MAKEDEPEND) -f $(SOURCES) -o $(DEP_FILE))	
+endif
+-include $(DEP_FILE)
+# include $(DEP_FILE)
 
-include $(DEP_FILE)
+build : $(OBJECTS)
+	@echo "-----------------------------"
+	@echo "Creating the executable"
+	@echo "-----------------------------"
+	$(LINKER) $(PROG) $(OBJECTS) $(FCLINKS)
 
-# Make all Targets
-all: $(PROG)
+.PHONY: clean
+clean :
+	@rm -rf *.mod *.o *.exe *.dep
 
 %.o : %.f95
 	@echo "-----------------------------"
 	@echo "Compiling the files into objects"
 	@echo "-----------------------------"
 	$(FC) $(FFLAGS) -c $<
-
-$(PROG) : $(OBJECTS)
-	@echo "-----------------------------"
-	@echo "Creating the executable"
-	@echo "-----------------------------"
-	$(LINKER) $(PROG) $(OBJECTS) $(FCLINKS)
-
-clean:
-	rm -r *.mod *.o *.exe *.dep
