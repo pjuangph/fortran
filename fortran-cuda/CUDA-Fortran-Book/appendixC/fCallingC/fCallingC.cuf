@@ -1,0 +1,51 @@
+! 
+!     Copyright (c) 2017, NVIDIA CORPORATION.  All rights reserved.
+!
+! NVIDIA CORPORATION and its licensors retain all intellectual property
+! and proprietary rights in and to this software, related documentation
+! and any modifications thereto.
+!
+!
+!    These example codes are a portion of the code samples from the companion
+!    website to the book "CUDA Fortran for Scientists and Engineers":
+!
+! http://store.elsevier.com/product.jsp?isbn=9780124169708
+!
+
+module kernel_m
+  interface zero
+     attributes(global) subroutine zero(a) &
+          bind(C,name='zero')
+       use iso_c_binding
+       real(c_float) :: a(*)
+     end subroutine zero
+  end interface
+end module kernel_m
+
+program fCallingC
+  use cudafor
+  use kernel_m
+  integer, parameter :: n = 4
+  real, device :: a_d(n)
+  real :: a(n)
+  integer :: i,nerrors
+
+  a_d = 1.0
+  call zero<<<1,n>>>(a_d)
+  a = a_d
+  write(*,*) a
+
+  nerrors = 0
+  do i = 1, n
+     if (a(i) .ne. 0.0) then
+        nerrors = nerrors + 1
+     endif
+  enddo 
+
+  if (nerrors .ne. 0) then
+     write(*,*) "Test Failed"
+  else
+     write(*,*) "Test Passed"
+  endif
+
+end program fCallingC
