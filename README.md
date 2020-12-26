@@ -140,6 +140,8 @@ Step 5. Now that you've created the build task, it's time to set up the debug ta
 This compiler started out as pgfortran. I think NVIDIA bought them out recently and integrated their compiler into their HPC SDK (https://developer.nvidia.com/hpc-sdk). This compiler is tricky to set up. You will need a dedicated linux machine with a NVIDIA Graphics card. I tried using WSL 2 with Ubuntu 20.04 and no luck. I ended up installing Ubuntu 20.04 on my laptop and I was able to install the cuda drivers. 
 
 ### nvfortran Installation Steps
+nvfortran is a compiler for cuda fortran. It should support open acc along with cuda [Nvidia OpenACC](https://docs.nvidia.com/hpc-sdk/compilers/openacc-gs/). Compiler directives: [nvfortran OpenACC Compiler Directives](https://docs.nvidia.com/hpc-sdk/compilers/openacc-gs/#using-openacc)
+
 Basic CUDA install
 <ol>  
   <li>Install the following
@@ -163,5 +165,11 @@ CUDA HPC SDK Install
 
 Now you are ready to add breakpoints and debug your code. 
 
-# Notes on CUDA with Fortran
-After hours of research and debugging as of 12/24/2020, I have determined that it is not worth it to pursue integrating visual studio code with cuda fortran files (cuf). We simply cannot debug these files easily without writing a custom visual studio code extension. There is a lot of support for c++ with CUDA where you can easily code and debug your files. If anyone has any new information on this please submit an issue and let me know. Fortran is simple and easy to use for arrays and coding but for more advance tasks with the GPU, it maybe faster to just use what everybody else is using and that is c++ with cuda. 
+# Notes on CUDA with Fortran Debugging
+Debugging CUDA fortran applications is not as easy or common on the internet as C++. I tried using visual studio code to do my debugging.
+After hours of research and debugging as of 12/24/2020, I have determined that it is not worth it to pursue integrating visual studio code with cuda fortran files (cuf). We simply cannot debug these files easily without writing a custom visual studio code extension. nvfortran recognizes the .cuf differently and offers you access to custom cuda modules that are not available with conventional fortran extensions. If anyone has any new information on this please submit an issue and let me know. 
+
+
+Debugging is currently only available with [Arm Forge](https://www.arm.com/products/development-tools/server-and-hpc/forge/ddt) but that's not a free program. 
+
+It might be worth it to compile small codes in cuda fortran that can be included in the overall fortran code or just use openacc.
