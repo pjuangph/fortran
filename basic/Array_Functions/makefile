@@ -16,31 +16,42 @@ PROG = main.exe
 # Source files to compile
 SOURCES := $(shell find $(SOURCE_DIR) -name '*.f95')
 OBJECTS := $(SOURCES:.f95=.o)
+$(info $(SOURCES))
+
+build: | check create_objects $(PROG)	
 
 ## Auto Generation of Dependancies 
 MAKEDEPEND=~/anaconda3/envs/dev/bin/fortdepend
+.PHONY: check
 check:
-ifeq (,$(DEP_FILE))
-	@echo "$(DEP_FILE) exists, skipping"
-else
+ifeq (,$(wildcard $(DEP_FILE)))
 	@echo "Creating dependancy file"
 	$(shell $(MAKEDEPEND) -f $(SOURCES) -o $(DEP_FILE))	
+else
+	@echo "$(DEP_FILE) exists, skipping"
 endif
 -include $(DEP_FILE)
-# include $(DEP_FILE)
 
-build : $(OBJECTS)
-	@echo "-----------------------------"
-	@echo "Creating the executable"
-	@echo "-----------------------------"
-	$(LINKER) $(PROG) $(OBJECTS) $(FCLINKS)
+
 
 .PHONY: clean
 clean :
 	@rm -rf *.mod *.o *.exe *.dep
+
+create_objects : *.f95
+	@echo "-----------------------------"
+	@echo "Creating modules"
+	@echo "-----------------------------"
+	$(FC) $(FFLAGS) -c $<
 
 %.o : %.f95
 	@echo "-----------------------------"
 	@echo "Compiling the files into objects"
 	@echo "-----------------------------"
 	$(FC) $(FFLAGS) -c $<
+
+$(PROG) : $(OBJECTS)
+	@echo "-----------------------------"
+	@echo "Creating the executable"
+	@echo "-----------------------------"
+	$(LINKER) $(PROG) $(OBJECTS) $(FCLINKS)
