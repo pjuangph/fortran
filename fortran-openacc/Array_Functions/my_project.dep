@@ -1,0 +1,10 @@
+# This file is generated automatically. DO NOT EDIT!
+
+array_funcs :  \
+	M_maths.o \
+	main.o
+
+M_maths.o : 
+
+main.o :  \
+	M_maths.o
