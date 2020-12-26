@@ -1,11 +1,10 @@
 # Paht's Fortran learning README
 Documenting my Fortran learning with examples. 
-
 <ul>
 	Wiki Contents
 	<ul>
-	<li>[Debugging fortran using visual studio code](https://github.com/pjuangph/fortran/wiki/Debugging-Fortran-using-Visual-Studio-Code)</li>
-	<li>Coming soon, debugging using nvfortran and OpenACC, no clue if this will work but lets find out</li>
+		<li> <a href="https://github.com/pjuangph/fortran/wiki/Debugging-Fortran-using-Visual-Studio-Code">Debugging fortran using visual studio code</a></li>
+		<li>Coming soon, debugging using nvfortran and OpenACC, no clue if this will work but lets find out</li>
 	</ul>
 </ul>
 ## Makefile Autodependancy generation
