@@ -1,6 +1,12 @@
 # Paht's Fortran learning README
 Documenting my Fortran learning with examples. 
-
+<ul>
+	Wiki Contents
+	<ul>
+		<li> <a href="https://github.com/pjuangph/fortran/wiki/Debugging-Fortran-using-Visual-Studio-Code">Debugging fortran using visual studio code</a></li>
+		<li>Coming soon, debugging using nvfortran and OpenACC, no clue if this will work but lets find out</li>
+	</ul>
+</ul>
 ## Makefile Autodependancy generation
 These sets of codes are compiled using a makefile and fortdepend for auto-dependancy generation. This means that you do not need to specify 
 ```
@@ -17,16 +23,16 @@ To get started (this works on linux but can work on windows if you want)
   You should simply be able to call fortdepend in your folder and have it generate a dependancy file `fortdepend -o Makefile.dep`. If this doesn't work then that's not the right file</li>
 </ol>
 
-Give this project a try once you've set up fortdepends by running `make`
 
 ## Debugging using Visual Code 
-### Windows WSL and Mac
-Step 1. Install Visual studio code and modern fortran library
-Step 2. Install GDB. Windows (http://www.gdbtutorial.com/tutorial/how-install-gdb) Mac (https://www.ics.uci.edu/~pattis/common/handouts/macmingweclipse/allexperimental/mac-gdb-install.html)
+### gfortran Windows WSL and Mac
+Step 1. Install Visual studio code 
+Step 2. Install fortran language server `pip install fortran-language-server`
+Step 3. Install fortran intellisense https://marketplace.visualstudio.com/items?itemName=hansec.fortran-ls 
+Step 4. Install GDB. Windows (http://www.gdbtutorial.com/tutorial/how-install-gdb) Mac (https://www.ics.uci.edu/~pattis/common/handouts/macmingweclipse/allexperimental/mac-gdb-install.html)
 
-Step 3. Install Modern Fortran Library. Note: syntax highlighting depends on the file extension so it's important to name your files either F90 or F95 for propper highlighting.
 
-Step 4 (optional) Set up visual studio code to build by creating a task.json inside the .vscode folder  https://code.visualstudio.com/docs/editor/tasks
+Step 5 (optional) Set up visual studio code to build by creating a task.json inside the .vscode folder  https://code.visualstudio.com/docs/editor/tasks
   Note: It doesn't matter what is in this file because you will be replacing it with the following
   
 ```
@@ -85,4 +91,40 @@ Step 5. Now that you've created the build task, it's time to set up the debug ta
 }
 ```
 
+## Setting up your linux environment for nvfortran (NVIDIA's CUDA fortran compiler) 
+This compiler started out as pgfortran. I think NVIDIA bought them out recently and integrated their compiler into their HPC SDK (https://developer.nvidia.com/hpc-sdk). This compiler is tricky to set up. You will need a dedicated linux machine with a NVIDIA Graphics card. I tried using WSL 2 with Ubuntu 20.04 and no luck. I ended up installing Ubuntu 20.04 on my laptop and I was able to install the cuda drivers. 
+
+### nvfortran Installation Steps
+nvfortran is a compiler for cuda fortran. It should support open acc along with cuda [Nvidia OpenACC](https://docs.nvidia.com/hpc-sdk/compilers/openacc-gs/). Compiler directives: [nvfortran OpenACC Compiler Directives](https://docs.nvidia.com/hpc-sdk/compilers/openacc-gs/#using-openacc)
+
+Basic CUDA install
+<ol>  
+  <li>Install the following
+    <ol>
+      <li>gfortran `sudo apt-get install gfortran`</li>
+      <li>build-essential `sudo apt-get install build-essential` we need gcc and all the standard libraries to compile c++ code</li>
+    </ol>
+  </li>
+  <li>Install CUDA on Ubuntu https://developer.nvidia.com/cuda-downloads</li>
+  <li>This sets up the nvcc compiler and that's located in /usr/local/cuda/bin</li>
+  <li>The samples should work. Try going into /usr/local/cuda/samples/4_Finance/BlackScholes and compiling. Note: you may want to copy the sample code to the home directory</li>
+  <li>One more thing, nvcc won't be included in your path so typing nvcc in terminal won't work. This is okay because the makefile references the propper location. (call make to compile)</li>
+</ol>
+
+CUDA HPC SDK Install
+<ol>
+  <li>Download the latest https://developer.nvidia.com/nvidia-hpc-sdk-downloads There may be an option to get the latest and the previous versions, get that one!</li> 
+  <li>The sdk is installed in the local folder. this is the path to nvfortran `hpc_install_path=/opt/nvidia/hpc_sdk/Linux_x86_64/2020/compilers/bin` </li>
+</ol>
+
+
 Now you are ready to add breakpoints and debug your code. 
+
+# Notes on CUDA with Fortran Debugging
+Debugging CUDA fortran applications is not as easy or common on the internet as C++. I tried using visual studio code to do my debugging.
+After hours of research and debugging as of 12/24/2020, I have determined that it is not worth it to pursue integrating visual studio code with cuda fortran files (cuf). We simply cannot debug these files easily without writing a custom visual studio code extension. nvfortran recognizes the .cuf differently and offers you access to custom cuda modules that are not available with conventional fortran extensions. If anyone has any new information on this please submit an issue and let me know. 
+
+
+Debugging is currently only available with [Arm Forge](https://www.arm.com/products/development-tools/server-and-hpc/forge/ddt) but that's not a free program. 
+
+It might be worth it to compile small codes in cuda fortran that can be included in the overall fortran code or just use openacc.
