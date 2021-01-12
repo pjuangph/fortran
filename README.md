@@ -27,8 +27,11 @@ To get started (this works on linux but can work on windows if you want)
 ## Debugging using Visual Code 
 ### gfortran Windows WSL and Mac
 Step 1. Install Visual studio code 
+
 Step 2. Install fortran language server `pip install fortran-language-server`
+
 Step 3. Install fortran intellisense https://marketplace.visualstudio.com/items?itemName=hansec.fortran-ls 
+
 Step 4. Install GDB. Windows (http://www.gdbtutorial.com/tutorial/how-install-gdb) Mac (https://www.ics.uci.edu/~pattis/common/handouts/macmingweclipse/allexperimental/mac-gdb-install.html)
 
 
