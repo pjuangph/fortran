@@ -1,6 +1,6 @@
 ! Module for defining statistical functions
 
-module stat_funcs
+module stats_funcs
     implicit none
     contains
 
@@ -70,4 +70,4 @@ module stat_funcs
 
     end subroutine
     
-end module stat_funcs
+end module stats_funcs

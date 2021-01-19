@@ -3,7 +3,7 @@
 
 ! Program for demonstrating statistical functions
 program stats
-    use stat_funcs
+    use stats_funcs
     implicit none
     ! Simple printing of strings 
     character :: name1*10 = " Fortran " ! 10 units long
