@@ -38,7 +38,7 @@ Step 4. Install GDB. Windows (http://www.gdbtutorial.com/tutorial/how-install-gd
 Step 5 (optional) Set up visual studio code to build by creating a task.json inside the .vscode folder  https://code.visualstudio.com/docs/editor/tasks
   Note: It doesn't matter what is in this file because you will be replacing it with the following
  
-### task.json file
+#### task.json file
   
 ```
 {
@@ -64,7 +64,7 @@ Step 5 (optional) Set up visual studio code to build by creating a task.json ins
 ```
 
 Step 5. Now that you've created the build task, it's time to set up the debug task. Create a Launch.json (https://code.visualstudio.com/docs/editor/debugging). Replace the launch json with the following code.
-### launch.json file
+#### launch.json file
 ```
 {
     // Use IntelliSense to learn about possible attributes.
