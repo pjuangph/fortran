@@ -1,5 +1,8 @@
 # Paht's Fortran learning README
 Documenting my Fortran learning with examples. 
+This tutorial covers Auto-dependancy generation using fortdepend, debugging using gfortran, and setting up nvidia fortran compiler sdk for cuda and openacc development.
+Prerequisites: You have to have visual studio code installed. Have access to linux server either ssh or openvnc (debug purposes). If you are new to visual studio code there's lots of youtube videos on how to install extensions. This tutorial is a bit advance, it covers the creation of launch.json and task.json for build and debug purposes.
+
 <ul>
 	Wiki Contents
 	<ul>
