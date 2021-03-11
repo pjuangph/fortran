@@ -35,7 +35,7 @@ Step 2. Install fortran language server `pip install fortran-language-server`
 
 Step 3. Install fortran intellisense https://marketplace.visualstudio.com/items?itemName=hansec.fortran-ls 
 
-Step 4. Install GDB. Windows (http://www.gdbtutorial.com/tutorial/how-install-gdb) Mac (https://www.ics.uci.edu/~pattis/common/handouts/macmingweclipse/allexperimental/mac-gdb-install.html)
+Step 4. Install GDB. Windows (https://rpg.hamsterrepublic.com/ohrrpgce/GDB_on_Windows) Mac (https://www.ics.uci.edu/~pattis/common/handouts/macmingweclipse/allexperimental/mac-gdb-install.html)
 
 
 Step 5 (optional) Set up visual studio code to build by creating a task.json inside the .vscode folder  https://code.visualstudio.com/docs/editor/tasks
