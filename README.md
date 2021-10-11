@@ -114,7 +114,7 @@ Basic CUDA install
     </ol>
   </li>
   <li>Install CUDA on Ubuntu https://developer.nvidia.com/cuda-downloads</li>
-  <li>This sets up the nvcc compiler and that's located in /usr/local/cuda/bin</li>
+  <li>This sets up the nvcc compiler and that's located in /opt/nvidia/hpc_sdk/Linux_x86_64/2021/compilers/bin</li>
   <li>The samples should work. Try going into /usr/local/cuda/samples/4_Finance/BlackScholes and compiling. Note: you may want to copy the sample code to the home directory</li>
   <li>One more thing, nvcc won't be included in your path so typing nvcc in terminal won't work. This is okay because the makefile references the propper location. (call make to compile)</li>
 </ol>
