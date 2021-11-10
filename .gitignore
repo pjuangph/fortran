@@ -31,3 +31,4 @@
 *.out
 *.app
 *.deb
+.DS_Store
